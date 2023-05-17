@@ -14,6 +14,9 @@ void execute(char *cp, char **args, char *prog);
 void ffree(char **args);
 char **split_buffer(char *buffer);
 char *_strdup(char *str);
-
+void handler(char **args, char *prog);
+char *path_finder(char *exe);
+char *append_path(char *s1, char *s2);
+int _strlen(char *str);
 
 #endif

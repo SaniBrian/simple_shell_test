@@ -12,6 +12,7 @@ void ffree(char **args)
 
 	if (!args || args == NULL)
 		return;
+
 	while (args[i])
 	{
 		free(args[i]);

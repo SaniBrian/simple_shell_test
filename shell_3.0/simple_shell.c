@@ -40,7 +40,7 @@ int main(int ac, char **argv)
 			perror(argv[0]);
 			exit(EXIT_FAILURE);
 		}
-		execute(args[0], args, argv[0]);
+		handler(args, argv[0]);
 		ffree(args);
 	}
 	ffree(args);

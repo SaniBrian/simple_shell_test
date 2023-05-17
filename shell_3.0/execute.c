@@ -7,7 +7,8 @@
 *@prog: program name
 *Return: void
 */
-extern char** environ;
+
+extern char **environ;
 
 void execute(char *cp, char **args, char *prog)
 {
@@ -26,8 +27,8 @@ void execute(char *cp, char **args, char *prog)
 	{
 		/**CHILD PROCESS*/
 		execve(cp, args, envp);
-		ffree(args);
 		perror(prog);
+		ffree(args);
 		exit(EXIT_FAILURE);
 	} else
 	{
