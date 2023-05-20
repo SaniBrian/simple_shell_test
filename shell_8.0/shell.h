@@ -25,6 +25,7 @@ int check_builtins(char **args, char *prog);
 int compare_str(char *s1, char *s2);
 void exit_0(char **args, char *prog);
 void print_env(char **args, char *prog);
+int _atoi(char *s);
 
 /**BUILT_INS STRUCT*/
 /**
