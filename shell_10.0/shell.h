@@ -33,6 +33,9 @@ void set_env_loop(char *new_var, char **tmp, char **args, char *prog);
 void unset_env(char **args, char *prog);
 void unset_env_loop(char **tmp, char **args, char *prog);
 void signal_handler(int signal);
+void cd_dir(char **args, char *prog);
+void chng_env(char *var, char *v_name, char *prog);
+void chng_env_loop(char *new_var, char *v_name, char **tmp, char *prog);
 
 /**BUILT_INS STRUCT*/
 /**

@@ -16,6 +16,7 @@ int check_builtins(char **args, char *prog)
 		{"env", print_env},
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
+		{"cd", cd_dir},
 		{NULL, NULL}
 	};
 
