@@ -7,6 +7,7 @@
 *Return: 0 if no b_ins found, 1 if otherwise
 */
 
+
 int check_builtins(char **args, char *prog)
 {
 	int i = 0, cmp;

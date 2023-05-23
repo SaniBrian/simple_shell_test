@@ -36,6 +36,9 @@ void signal_handler(int signal);
 void cd_dir(char **args, char *prog);
 void chng_env(char *var, char *v_name, char *prog);
 void chng_env_loop(char *new_var, char *v_name, char **tmp, char *prog);
+void cd_absolute(char **args, char *pwd, char *prog);
+int err_check(int err, char *prog);
+
 
 /**BUILT_INS STRUCT*/
 /**
