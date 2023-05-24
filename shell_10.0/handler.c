@@ -28,7 +28,7 @@ void handler(char **args, char *prog)
 		free(path);
 	} else
 	{
-		perror(prog);
+		err_check(127, args);
 		return;
 	}
 }

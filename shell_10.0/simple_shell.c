@@ -13,21 +13,16 @@ int main(int ac, char **argv)
 	int atty = 1;
 	size_t buffer_size = 0;
 	ssize_t input_byte;
-	(void)ac;
 
 	signal(SIGINT, signal_handler);
-	while (atty)
+	env.p_name = argv[0];
+	env.p_count = 0;
+	while (atty && ac)
 	{
-		args = NULL;
-		buffer = NULL;
 		user_prompt(&atty);
 		input_byte = getline(&buffer, &buffer_size, stdin);
 		if (input_byte == -1)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			free(buffer);
-			break;
-		}
+			getline_fail(environ, buffer);
 		buffer[input_byte - 1] = '\0';
 		if (*buffer == '\0')
 		{
@@ -36,13 +31,15 @@ int main(int ac, char **argv)
 		}
 		args = split_buffer(buffer);
 		free(buffer);
+		buffer = NULL;
 		if (args == NULL)
 		{
 			perror(argv[0]);
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		handler(args, argv[0]);
 		ffree(args);
+		args = NULL;
 	}
 	if (env.flag)
 		ffree(environ);
@@ -60,4 +57,21 @@ void signal_handler(int signal)
 {
 	(void)signal;
 	write(STDOUT_FILENO, "\n$ ", 3);
+}
+
+/**
+ *getline_fail - handles getline failure
+ *@env: environ variable
+ *@buf: buffer variable
+ *Return: void
+ */
+
+void getline_fail(char **environ, char *buf)
+{
+	if (env.flag)
+		ffree(environ);
+	write(STDOUT_FILENO, "\n", 1);
+	free(buf);
+	buf = NULL;
+	exit(0);
 }

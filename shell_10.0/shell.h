@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 /**ENVIRONMENT VARIABLE*/
 extern char **environ;
@@ -37,8 +38,13 @@ void cd_dir(char **args, char *prog);
 void chng_env(char *var, char *v_name, char *prog);
 void chng_env_loop(char *new_var, char *v_name, char **tmp, char *prog);
 void cd_absolute(char **args, char *pwd, char *prog);
-int err_check(int err, char *prog);
-
+int err_check(int err, char **args);
+void cd_err_2(int err_no, char *e_msg, char **args);
+void cd_err(int err_no, char *e_msg, char **args);
+char *_itoa(int num);
+int int_len(int num);
+int cd_slash(char **args, char *pwd);
+void getline_fail(char **env, char *buf);
 
 /**BUILT_INS STRUCT*/
 /**
@@ -62,6 +68,8 @@ typedef struct builtins
 struct Env
 {
 	int flag;
+	int p_count;
+	char *p_name;
 } env;
 
 

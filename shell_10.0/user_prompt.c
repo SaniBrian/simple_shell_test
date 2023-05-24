@@ -10,6 +10,7 @@ void user_prompt(int *atty)
 {
 	char prompt[] = "$ ";
 
+	env.p_count++;
 	if ((isatty(STDIN_FILENO) == 1) && (isatty(STDOUT_FILENO) == 1))
 		*atty = 1;
 	else

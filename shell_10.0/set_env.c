@@ -16,7 +16,7 @@ void set_env(char **args, char *prog)
 		arg_count++;
 	if (arg_count < 3)
 	{
-		perror(prog);
+		err_check(100, args);
 		return;
 	}
 	while (environ[env_count])

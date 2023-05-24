@@ -20,14 +20,20 @@ void execute(char *cp, char **args, char *prog)
 		/**EROOR*/
 		perror(prog);
 		ffree(args);
-		exit(EXIT_FAILURE);
+		if (env.flag)
+			ffree(environ);
+		exit(1);
 	} else if (pid == 0)
 	{
 		/**CHILD PROCESS*/
 		execve(cp, args, envp);
-		perror(prog);
+		if (err_check(errno, args) == 0)
+			perror(env.p_name);
 		ffree(args);
-		exit(EXIT_FAILURE);
+		if (env.flag)
+			ffree(environ);
+		args = NULL;
+		exit(1);
 	} else
 	{
 		wait(&wait_status);

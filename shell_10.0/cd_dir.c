@@ -1,6 +1,6 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include <errno.h>
+
 /**
 *cd_dir - change directory
 *@args: vectors of args
@@ -23,6 +23,7 @@ void cd_dir(char **args, char *prog)
 	{
 		if (!getenv("HOME"))
 		{
+			free(pwd);
 			perror(prog);
 			return;
 		}
@@ -31,8 +32,8 @@ void cd_dir(char **args, char *prog)
 		chng_env(getenv("HOME"), nnew, prog);
 	} else if (args[1][0] == 47)/** / */
 	{
-		err = chdir(args[1]);
-		if (err_check(err, prog) == 1)
+		err = cd_slash(args, pwd);
+		if (err == -1)
 			return;
 		chng_env(pwd, old, prog);
 		chng_env(args[1], nnew, prog);
@@ -163,8 +164,12 @@ void cd_absolute(char **args, char *pwd, char *prog)
 	}
 	_strcat(f_path, args[1]);
 	err = chdir(f_path);
-	if (err_check(err, prog) == 1)
+	if (err == -1)
 	{
+		if (errno == 13)
+			err_check(2, args);
+		else
+			err_check(errno, args);
 		free(f_path);
 		return;
 	}
@@ -180,18 +185,24 @@ void cd_absolute(char **args, char *pwd, char *prog)
 }
 
 /**
- *err_check - handles chdir error
- *@err: error code
- *@prog: program name
- *Return: void
+ *cd_slash - handles absolute path directory
+ *@args: args
+ *@pwd: present working dir allocated space
+ *Return: int
  */
-
-int err_check(int err, char *prog)
+int cd_slash(char **args, char *pwd)
 {
-	if (err != 0)
+	int err;
+
+	err = chdir(args[1]);
+	if (err == -1)
 	{
-		perror(prog);
-		return (1);
+		free(pwd);
+		if (errno == 13)
+			err_check(2, args);
+		else
+			err_check(errno, args);
+		return (-1);
 	}
 	return (0);
 }

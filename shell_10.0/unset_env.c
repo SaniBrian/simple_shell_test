@@ -16,7 +16,7 @@ void unset_env(char **args, char *prog)
 		arg_count++;
 	if (arg_count < 2)
 	{
-		perror(prog);
+		err_check(100, args);
 		return;
 	}
 	while (environ[env_count])
