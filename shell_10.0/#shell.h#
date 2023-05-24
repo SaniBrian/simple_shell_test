@@ -1,23 +1,17 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/**LIBRARY FUNCTION PROTO*/
+UNCTION PROTO*/
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
 #include <errno.h>
 
-
-#define BUFSIZE 1024
-
 /**ENVIRONMENT VARIABLE*/
 extern char **environ;
 
-
 /**FUNCTION PROTOTYPES*/
-void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
-ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 void _memcpy(void *newptr, const void *ptr, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strtok(char *string, char *dlm);

@@ -6,20 +6,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
-#include <errno.h>
-
-
-#define BUFSIZE 1024
 
 /**ENVIRONMENT VARIABLE*/
 extern char **environ;
 
-
 /**FUNCTION PROTOTYPES*/
-void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
-ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
-void _memcpy(void *newptr, const void *ptr, unsigned int size);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strtok(char *string, char *dlm);
 void user_prompt(int *atty);
 void execute(char *cp, char **args, char *prog);
@@ -46,13 +37,8 @@ void cd_dir(char **args, char *prog);
 void chng_env(char *var, char *v_name, char *prog);
 void chng_env_loop(char *new_var, char *v_name, char **tmp, char *prog);
 void cd_absolute(char **args, char *pwd, char *prog);
-int err_check(int err, char **args);
-void cd_err_2(int err_no, char *e_msg, char **args);
-void cd_err(int err_no, char *e_msg, char **args);
-char *_itoa(int num);
-int int_len(int num);
-int cd_slash(char **args, char *pwd);
-void getline_fail(char **env, char *buf);
+int err_check(int err, char *prog);
+
 
 /**BUILT_INS STRUCT*/
 /**
@@ -76,8 +62,6 @@ typedef struct builtins
 struct Env
 {
 	int flag;
-	int p_count;
-	char *p_name;
 } env;
 
 
