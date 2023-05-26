@@ -61,7 +61,7 @@ void signal_handler(int signal)
 
 /**
  *getline_fail - handles getline failure
- *@env: environ variable
+ *@environ: environ variable
  *@buf: buffer variable
  *Return: void
  */

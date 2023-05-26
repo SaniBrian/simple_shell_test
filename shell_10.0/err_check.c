@@ -3,7 +3,7 @@
 /**
  *err_check - handles chdir error
  *@err: error code
- *@exec_name: name of exec
+ *@args: args
  *Return: void
  */
 
@@ -17,7 +17,13 @@ int err_check(int err, char **args)
 		cd_err_2(err, _mssg, args);
 		return (1);
 	}
-	else if (err != 2)
+	else if (err == 3)
+	{
+		_mssg = "Illegal number";
+		cd_illegal(err, _mssg, args);
+		return (1);
+	}
+	else
 	{
 		if (err == 13)
 			_mssg = "Permission denied";
@@ -65,12 +71,11 @@ void cd_err_2(int err_no, char *e_msg, char **args)
 	_strcat(message, ": ");
 	_strcat(message, e_msg);
 	_strcat(message, args[1]);
-	write(STDOUT_FILENO, message, _strlen(message));
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDERR_FILENO, message, _strlen(message));
+	write(STDERR_FILENO, "\n", 1);
 	free(p_count_str);
 	free(message);
 	message = NULL;
-	return;
 }
 
 /**
@@ -103,10 +108,47 @@ void cd_err(int err_no, char *e_msg, char **args)
 	_strcat(message, args[0]);
 	_strcat(message, ": ");
 	_strcat(message, e_msg);
-	write(STDOUT_FILENO, message, _strlen(message));
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDERR_FILENO, message, _strlen(message));
+	write(STDERR_FILENO, "\n", 1);
 	free(p_count_str);
 	free(message);
 	message = NULL;
-	return;
+}
+
+/**
+ *cd_illegal - handles illegal cd error
+ *@err_no: error code
+ *@e_msg: error message
+ *@args: args
+ *Return: void
+ */
+void cd_illegal(int err_no, char *e_msg, char **args)
+{
+	char *message, *p_count_str;
+	int len;
+	(void)err_no;
+
+	len = _strlen(env.p_name) + int_len(env.p_count) + _strlen(args[1]);
+	len = len + _strlen(e_msg) + _strlen(args[0]);
+	message = malloc(sizeof(char) * (len + 9));
+	if (message == NULL)
+	{
+		perror(env.p_name);
+		return;
+	}
+	p_count_str = _itoa(env.p_count);
+	_strcpy(message, env.p_name);
+	_strcat(message, ": ");
+	_strcat(message, p_count_str);
+	_strcat(message, ": ");
+	_strcat(message, args[0]);
+	_strcat(message, ": ");
+	_strcat(message, e_msg);
+	 _strcat(message, ": ");
+	_strcat(message, args[1]);
+	write(STDERR_FILENO, message, _strlen(message));
+	write(STDERR_FILENO, "\n", 1);
+	free(p_count_str);
+	free(message);
+	message = NULL;
 }

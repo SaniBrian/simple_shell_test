@@ -1,6 +1,0 @@
-#! /bin/bash
-
-printf "compilling...,\n"
-sleep 1
-
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o simple_shell

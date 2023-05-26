@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <errno.h>
 
 /**
 *cd_dir - change directory
